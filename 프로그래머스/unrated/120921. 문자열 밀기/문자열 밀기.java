@@ -4,7 +4,6 @@ class Solution {
         if (A.equals(B)){
             return 0;
         }
-        
         StringBuilder sb = new StringBuilder(A);
         int count = 0;
         for (int i = 0; i < A.length(); i++){
@@ -16,20 +15,20 @@ class Solution {
                 return count;
             }
         }
-        
         return -1;
     }
 }
 
-// 강사님 풀이
-// int answer = 0;
-// StringBuilder sb = new StringBuilder(A);
-// while (!sb.toString().equals(B)){
-//     answer++;
-//     sb.insert(0, sb.substring(sb.length() - 1));
-//     sb.delete(sb.length(), sb.length());
-//     if (answer > A.length()){
-//         answer = -1;
-//         break;
-//     }
-// }
+        // 강사님 풀이
+        // int answer = -1;
+        // StringBuilder sb = new StringBuilder(A);
+        // for (int i = 0; i < A.length(); i++){
+        //     if (sb.toString().equals(B)){
+        //         answer = i;
+        //         break;
+        //     }
+        //     sb.insert(0, sb.charAt(sb.length() - 1));
+        //     sb.delete(sb.length() - 1, sb.length());
+        // }
+        // return answer;
+
