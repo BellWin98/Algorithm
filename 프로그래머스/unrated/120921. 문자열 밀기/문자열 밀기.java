@@ -1,5 +1,6 @@
 class Solution {
     public int solution(String A, String B) {
+        // 내 풀이
         if (A.equals(B)){
             return 0;
         }
@@ -15,6 +16,7 @@ class Solution {
                 return count;
             }
         }
+        
         return -1;
     }
 }
