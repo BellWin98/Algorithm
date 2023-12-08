@@ -20,3 +20,16 @@ class Solution {
         return -1;
     }
 }
+
+// 강사님 풀이
+// int answer = 0;
+// StringBuilder sb = new StringBuilder(A);
+// while (!sb.toString().equals(B)){
+//     answer++;
+//     sb.insert(0, sb.substring(sb.length() - 1));
+//     sb.delete(sb.length(), sb.length());
+//     if (answer > A.length()){
+//         answer = -1;
+//         break;
+//     }
+// }
