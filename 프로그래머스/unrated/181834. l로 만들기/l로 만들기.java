@@ -1,14 +1,13 @@
 class Solution {
     public String solution(String myString) {
-        String answer = "";
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < myString.length(); i++){
             if (myString.charAt(i) < 'l'){
-                answer += 'l';
+                sb.append('l');
             } else {
-                answer += myString.charAt(i);
+                sb.append(myString.charAt(i));
             }
         }
-        
-        return answer;
+        return sb.toString();
     }
 }
