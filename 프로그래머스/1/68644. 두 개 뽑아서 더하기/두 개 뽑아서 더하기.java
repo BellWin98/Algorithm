@@ -9,12 +9,17 @@ class Solution {
             }
         }
         int[] answer = new int[numSet.size()];
-        Iterator<Integer> numIter = numSet.iterator();
-        int i = 0;
-        while (numIter.hasNext()){
-            answer[i] = numIter.next();
-            i++;
+        int count = 0;
+        for (int a : numSet){
+            answer[count] = a;
+            count++;
         }
+        // Iterator<Integer> numIter = numSet.iterator();
+        // int i = 0;
+        // while (numIter.hasNext()){
+        //     answer[i] = numIter.next();
+        //     i++;
+        // }
         return answer;
     }
 }
