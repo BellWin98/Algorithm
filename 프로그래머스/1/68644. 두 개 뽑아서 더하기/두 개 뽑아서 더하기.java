@@ -2,27 +2,40 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] numbers) {
-        List<Integer> numberList = new ArrayList<>();
-        
-        for (int i = 0; i < numbers.length - 1; i++){
+        Set<Integer> numSet = new TreeSet<>();
+        for (int i = 0; i< numbers.length - 1; i++){
             for (int j = i + 1; j < numbers.length; j++){
-                if (!numberList.contains(numbers[i] + numbers[j])){
-                    numberList.add(numbers[i] + numbers[j]);
-                }
+                numSet.add(numbers[i] + numbers[j]);
             }
         }
-        
-        Collections.sort(numberList);
-        int[] answer = new int[numberList.size()];
-        
-        for (int i = 0; i < answer.length; i++){
-            answer[i] = numberList.get(i);
+        int[] answer = new int[numSet.size()];
+        Iterator<Integer> numIter = numSet.iterator();
+        int i = 0;
+        while (numIter.hasNext()){
+            answer[i] = numIter.next();
+            i++;
         }
-        
         return answer;
     }
 }
 
+// List 활용 풀이
+//         List<Integer> numberList = new ArrayList<>();
+//         for (int i = 0; i < numbers.length - 1; i++){
+//             for (int j = i + 1; j < numbers.length; j++){
+//                 if (!numberList.contains(numbers[i] + numbers[j])){
+//                     numberList.add(numbers[i] + numbers[j]);
+//                 }
+//             }
+//         }
+//         Collections.sort(numberList);
+//         int[] answer = new int[numberList.size()];
+//         for (int i = 0; i < answer.length; i++){
+//             answer[i] = numberList.get(i);
+//         }
+//         return answer;
+
+// 배열 활용 풀이
 //         int[] temp = new int[numbers.length * (numbers.length - 1) / 2];
 //         int[] answer = new int[numbers.length * (numbers.length - 1) / 2];
 //         int index = 0;
