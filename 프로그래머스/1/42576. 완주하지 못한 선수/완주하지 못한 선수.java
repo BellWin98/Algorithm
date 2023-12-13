@@ -37,9 +37,6 @@ class Solution {
 //         resultMap.remove(member);
 //     }
 // }
-
-// for (String member : resultMap.keySet()){
-//     answer = member;
-// }
+// String answer = resultMap.keySet().iterator().next();
 
 // return answer;
