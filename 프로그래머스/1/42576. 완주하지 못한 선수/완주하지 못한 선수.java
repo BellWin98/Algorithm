@@ -8,7 +8,6 @@ class Solution {
             participantMap.put(person, participantMap.getOrDefault(person, 0) + 1);
         }
         
-        String answerKey = "";
         for (String person : completion){
             if (participantMap.containsKey(person)){
                 participantMap.put(person, participantMap.get(person) - 1);
