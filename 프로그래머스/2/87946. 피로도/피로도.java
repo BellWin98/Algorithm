@@ -27,7 +27,6 @@ class Solution {
                 temp.remove(temp.size() - 1);
                 visited[i] = false;
             }
-        
         }
     }
 }
