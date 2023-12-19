@@ -15,10 +15,10 @@ class Solution {
         if (count > max){
             max = count;
         }
-        if (count == dungeons.length){
-            permutations.add(new ArrayList<>(temp));
-            return;
-        }
+        // if (count == dungeons.length){
+        //     permutations.add(new ArrayList<>(temp));
+        //     return;
+        // }
         for (int i = 0; i < dungeons.length; i++){
             if (!visited[i] && k >= dungeons[i][0]){
                 visited[i] = true;
