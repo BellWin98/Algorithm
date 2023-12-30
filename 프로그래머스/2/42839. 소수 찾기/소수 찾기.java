@@ -1,49 +1,64 @@
 import java.util.*;
 
 class Solution {
+    static List<Integer> numberList;
+    static boolean[] visited;
+    static Set<List<Integer>> permutations; // 중복 순열 제거
+    static List<Integer> temp;
+    
     public int solution(String numbers) {
+        int answer = 0;
+        StringBuilder sb = new StringBuilder();
+        numberList = new ArrayList<>();
+        permutations = new HashSet<>();
+        temp = new ArrayList<>();
         String[] numberSplit = numbers.split("");
-        List<Integer> numberList = new ArrayList<>();
-        Set<List<Integer>> permutations = new HashSet<>();
-        List<Integer> temp = new ArrayList<>();
         for (String str : numberSplit){
             numberList.add(Integer.parseInt(str));
         }
-        boolean[] visited = new boolean[numberList.size()];
-        permutation(permutations, visited, numberList, temp, 0);
+        visited = new boolean[numberList.size()];
+        permutation();
         
-        return permutations.size();
-    }
-    
-    public static void permutation(Set<List<Integer>> permutations, boolean[] visited, 
-                                   List<Integer> numberList, List<Integer> temp, int n){
-        if (n > 0){
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < temp.size(); i++){
-                sb.append(temp.get(i));
+        for (List<Integer> permutation : permutations){
+            sb.setLength(0);
+            for (int number : permutation){
+                sb.append(number);
             }
-            if (!sb.toString().equals("1") && sb.indexOf("0") != 0){
-                int number = Integer.parseInt(sb.toString());
-                int count = 1;
-                // 소수 판별
-                for (int i = 2; i * i <= number; i++){
-                    if (number % i == 0){
-                        count++;
-                    }
-                }
-                if (count == 1){
-                    permutations.add(new ArrayList<>(temp));
-                }
+            int number = Integer.parseInt(sb.toString());
+            if (number == 1){
+                continue;
+            }
+            // 소수 체크
+            if (isPrimeNumber(number)){
+                answer++;
             }
         }
+        return answer;
+    }
+
+    void permutation(){
         for (int i = 0; i < numberList.size(); i++){
             if (!visited[i]){
                 visited[i] = true;
                 temp.add(numberList.get(i));
-                permutation(permutations, visited, numberList, temp, n + 1);
+                permutation();
                 temp.remove(temp.size() - 1);
                 visited[i] = false;
             }
         }
+        // temp가 공백이거나, 요소가 0으로 시작할 때 리스트 삽입 x
+        if (temp.size() == 0 || temp.get(0) == 0){
+            return;
+        }
+        permutations.add(new ArrayList<>(temp));
+    }
+    
+    boolean isPrimeNumber(int number){
+        for (int i = 2; i * i <= number; i++){
+            if (number % i == 0){
+                return false;
+            }
+        }
+        return true;
     }
 }
