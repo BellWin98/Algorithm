@@ -6,8 +6,6 @@ class Solution {
     
     public int solution(int[] number) {
         int answer = 0;
-        int negativeCount = 0;
-        int zeroCount = 0;
         combinations = new ArrayList<>();
         temp = new ArrayList<>();
         combination(number, 0);
