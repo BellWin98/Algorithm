@@ -1,41 +1,54 @@
 import java.util.*;
 
-class Node {
-    int x;
-    int y;
-    public Node(int x, int y){
-        this.x = x;
-        this.y = y;
-    }
-}
-
 class Solution {
-    static int[][] move = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    static int n ,m;
-    static int[][] visited;
-    public int solution(int[][] maps){
-        n = maps.length;
-        m = maps[0].length;
-        visited = new int[n][m];
-        for (int i = 0; i < n; i++) {
-            Arrays.fill(visited[i], -1);
+    static boolean[][] visited;
+    static int[][] distance;
+    static int[][] moves;
+    static int m, n;
+    
+    static class Node{
+        int x, y;
+        public Node(int x, int y){
+            this.x = x;
+            this.y = y;
         }
-        Queue<Node> queue = new LinkedList<>();
-        queue.add(new Node(0, 0));
-        visited[0][0] = 1;
+    }
+    
+    public int solution(int[][] maps) {
+        m = maps.length;
+        n = maps[0].length;
+        visited = new boolean[m][n];
+        distance = new int[m][n];
+        moves = new int[][]{{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        for (int i = 0; i < m; i++){
+            Arrays.fill(distance[i], 1);
+        }
+        Node startNode = new Node(0, 0);
+        Node endNode = new Node(m - 1, n - 1);
+        int shortest = bfs(startNode, endNode, maps);
         
-        while (!queue.isEmpty()) {
-            Node node = queue.poll();
-            for (int[] direction : move) {
-                int nx = node.x + direction[0];
-                int ny = node.y + direction[1];
-
-                if (nx >= 0 && nx < n && ny >= 0 && ny < m && visited[nx][ny] == -1 && maps[nx][ny] == 1) {
-                    visited[nx][ny] = visited[node.x][node.y] + 1;
-                    queue.add(new Node(nx, ny));
+        return shortest == -1 ?  -1 : shortest;
+    }
+    
+    int bfs(Node start, Node destination, int[][] maps){
+        visited[start.x][start.y] = true;
+        Queue<Node> Q = new LinkedList<>();
+        Q.add(start);
+        while(!Q.isEmpty()){
+            Node node = Q.poll();
+            for (int[] move : moves){
+                int nx = node.x + move[0];
+                int ny = node.y + move[1];
+                if (nx == destination.x && ny == destination.y){
+                    return distance[node.x][node.y] + 1;
+                }
+                if (nx >= 0 && nx < m && ny >= 0 && ny < n && !visited[nx][ny] && maps[nx][ny] == 1){
+                    visited[nx][ny] = true;
+                    distance[nx][ny] = distance[node.x][node.y] + 1;
+                    Q.add(new Node(nx, ny));
                 }
             }
         }
-        return visited[n -1][m - 1];
+        return -1;
     }
 }
