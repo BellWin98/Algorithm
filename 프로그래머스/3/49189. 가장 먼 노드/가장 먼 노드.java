@@ -1,44 +1,47 @@
 import java.util.*;
 
 class Solution {
+    static List<List<Integer>> adjList;
     static boolean[] visited;
     static int[] distance;
-    static List<List<Integer>> adjList;
     public int solution(int n, int[][] edge) {
+        adjList = new ArrayList<>();
         visited = new boolean[n];
         distance = new int[n];
-        adjList = new ArrayList<>();
+        int answer = 0;
         for (int i = 0; i < n; i++){
             adjList.add(new ArrayList<>());
         }
-        for (int[] arr : edge){
-            addEdge(arr[0] - 1, arr[1] - 1);
+        for (int[] index : edge){
+            addEdge(index[0] - 1, index[1] - 1);
+        }
+        bfs(0);
+        System.out.println(Arrays.toString(distance));
+        Arrays.sort(distance);
+        int max = distance[distance.length - 1];
+        for (int i = distance.length - 1; i >= 0; i--){
+            if (distance[i] == max) {
+                answer++;
+            } else {
+                break;
+            }
         }
         
-        bfs(0);
-        int max = Arrays.stream(distance).max().getAsInt();
-        int answer = (int) Arrays.stream(distance).filter(a -> a == max).count();
-        // Arrays.sort(distance);
-        // int max = distance[distance.length - 1];
-        // for (int number : distance){
-        //     if (number == max){
-        //         answer++;
-        //     }
-        // }
         return answer;
     }
     
     void bfs(int start){
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(start);
+        Queue<Integer> Q = new LinkedList<>();
         visited[start] = true;
-        while (!queue.isEmpty()){
-            int vertex = queue.poll();
-            for (int target : adjList.get(vertex)){
-                if (!visited[target]){
-                    distance[target] = distance[vertex] + 1;
-                    queue.add(target);
-                    visited[target] = true;
+        Q.add(start);
+        
+        while (!Q.isEmpty()){
+            int prev = Q.poll();
+            for (int next : adjList.get(prev)){
+                if (!visited[next]){
+                    visited[next] = true;
+                    distance[next] = distance[prev] + 1;
+                    Q.add(next);
                 }
             }
         }
