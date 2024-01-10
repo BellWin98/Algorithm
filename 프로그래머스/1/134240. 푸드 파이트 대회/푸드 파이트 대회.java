@@ -9,12 +9,6 @@ class Solution {
             int n = food[i] / 2;
             while (n > 0){
                 deque.addLast(i);
-                n--;
-            }
-        }
-        for (int i = food.length - 1; i > 0; i--){
-            int n = food[i] / 2;
-            while (n > 0){
                 deque.addFirst(i);
                 n--;
             }
