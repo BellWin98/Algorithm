@@ -43,6 +43,4 @@ class Solution {
     String exitMessage(String nickname){
         return nickname + "님이 나갔습니다.";
     }
-    
-    
 }
