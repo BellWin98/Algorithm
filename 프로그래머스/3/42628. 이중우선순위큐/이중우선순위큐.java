@@ -10,11 +10,11 @@ class Solution {
             if (sp[0].equals("I")){
                 minPq.add(Integer.parseInt(sp[1]));
                 maxPq.add(Integer.parseInt(sp[1]));
-            } else if (sp[0].equals("D")) {
+            } else {
                 if (!minPq.isEmpty() && sp[1].equals("-1")){
                     int value = minPq.poll();
                     maxPq.remove(value);
-                } else if (!maxPq.isEmpty() && sp[1].equals("1")){
+                } else if (!maxPq.isEmpty()){
                     int value = maxPq.poll();
                     minPq.remove(value);
                 }
