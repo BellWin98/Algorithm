@@ -1,27 +1,30 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
+        List<Integer> numberList = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(br.readLine());
-        double M = Integer.MIN_VALUE;
-        double[] scores = new double[N];
+        int max = Integer.MIN_VALUE;
         double sum = 0;
-
-        for (int i = 0; i < N; i++){
-            int score = Integer.parseInt(st.nextToken());
-            M = Math.max(M, score);
-            scores[i] = score;
+        while (st.hasMoreTokens()){
+            int number = Integer.parseInt(st.nextToken());
+            if (number > max){
+                max = number;
+            }
+            numberList.add(number);
         }
 
-        for (int i = 0; i < N; i++){
-            scores[i] = (scores[i] / M) * 100.0;
-            sum += scores[i];
+        for (int number : numberList){
+            sum += (double) number / max * 100;
         }
 
         System.out.println(sum / N);
