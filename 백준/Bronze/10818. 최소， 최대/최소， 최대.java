@@ -1,17 +1,19 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int max = Integer.MIN_VALUE;
         int min = Integer.MAX_VALUE;
-        int count = sc.nextInt();
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < count; i++){
-            list.add(sc.nextInt());
-        }
-
-        for (int number : list){
+        while (st.hasMoreTokens()){
+            int number = Integer.parseInt(st.nextToken());
             if (number > max){
                 max = number;
             }
@@ -19,6 +21,7 @@ public class Main {
                 min = number;
             }
         }
+
         System.out.println(min + " " + max);
     }
 }
