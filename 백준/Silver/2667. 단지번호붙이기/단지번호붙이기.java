@@ -1,67 +1,65 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Main {
 
+    static boolean[][] visited;
+    static int[] dx = {-1, 1, 0, 0};
+    static int[] dy = {0, 0, -1, 1};
+    static int[][] map;
     static int N;
-    static int[][] graph;
-    static int count;
-    static List<Integer> houses = new ArrayList<>(); //
-    public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        graph = new int[N][N];
 
-        for (int i = 0; i < graph.length; i++){
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int j = 0;
-            for (char c : st.nextToken().toCharArray()){
-                // char형태의 변수를 '0'으로 빼주면 정수가 됨
-                graph[i][j++] = c - '0';
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int groups = 0;
+
+        N = Integer.parseInt(br.readLine());
+
+        map = new int[N][N];
+        visited = new boolean[N][N];
+        List<Integer> houses = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            char[] chars = br.readLine().toCharArray();
+            for (int j = 0; j < chars.length; j++) {
+                map[i][j] = Character.getNumericValue(chars[j]);
             }
         }
 
-        int result = 0; // 총 단지 수
-
-        // 2중 for문으로 2차원 배열을 (0,0)부터 모두 탐색
-        for (int i = 0; i < graph.length; i++){
-            for (int j = 0; j < graph.length; j++){
-                if (dfs(i, j)){
-                    result += 1; // dfs가 정상적으로 순회하면 단지 수 1 증가
-                    houses.add(count); // dfs 돌면서 카운트 한 집의 개수를 리스트에 넣음
-                    count = 0; // 카운트 초기화
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map.length; j++) {
+                if (!visited[i][j] && map[i][j] == 1) {
+                    houses.add(dfs(j, i));
+                    groups++;
                 }
             }
         }
 
-        System.out.println(result);
-        Collections.sort(houses); // 오름차순 정렬
-        for (int house : houses){
+        Collections.sort(houses);
+        System.out.println(groups);
+        for (int house : houses) {
             System.out.println(house);
         }
     }
 
-    static boolean dfs(int x, int y){
+    public static int dfs(int x, int y) {
 
-        // 범위 이탈 시 false 리턴
-        if (x < 0 || x >= N || y < 0 || y >= N){
-            return false;
+        visited[y][x] = true;
+        int houseCount = 1;
+
+        for (int i = 0; i < 4; i++) {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            if (nx >= 0 && ny >= 0 && nx < N && ny < N && !visited[ny][nx] && map[ny][nx] == 1) {
+                houseCount += dfs(nx, ny);
+            }
         }
 
-        // 집이 있는 곳(1)을 방문하면 0으로 바꿔주기 때문에 visited 사용 필요 없음.
-        if (graph[x][y] == 1){
-            graph[x][y] = 0;
-            count++; // 특정 단지의 집 개수 카운트
-
-            // 지도 상, 하, 좌, 우 dfs 돌리기
-            dfs(x - 1, y);
-            dfs(x, y - 1);
-            dfs(x + 1, y);
-            dfs(x, y + 1);
-            return true;
-        }
-        return false;
+        return houseCount;
     }
 }
