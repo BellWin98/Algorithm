@@ -5,70 +5,72 @@ import java.util.*;
 
 public class Main {
 
+    static List<List<Integer>> adjList = new ArrayList<>();
     static boolean[] visited;
-    static List<List<Integer>> graph = new ArrayList<>();
+
     public static void main(String[] args) throws IOException {
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken()); // 정점의 개수
-        int M = Integer.parseInt(st.nextToken()); // 간선의 개수
-        int V = Integer.parseInt(st.nextToken()); // 탐색 시작할 정점의 번호
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        int V = Integer.parseInt(st.nextToken()) - 1;
 
-        visited = new boolean[N]; // 인덱스 0부터 시작
+        visited = new boolean[N];
 
-        for (int i = 0; i < N; i++){
-            graph.add(new ArrayList<>()); // 내부 리스트 객체 생성
+        for (int i = 0; i < N; i++) {
+            adjList.add(new ArrayList<>());
         }
 
-        for (int i = 0; i < M; i++){
+        for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int start = Integer.parseInt(st.nextToken());
-            int end = Integer.parseInt(st.nextToken());
+            int start = Integer.parseInt(st.nextToken()) - 1;
+            int end = Integer.parseInt(st.nextToken()) - 1;
             addEdge(start, end);
         }
 
-        // 이중 리스트 내부의 각 리스트의 요소를 오름차순으로 정렬
-        for (List<Integer> index : graph) {
-            Collections.sort(index);
+        // 연결되어 있는 자식 노드를 오름차순으로 정렬 (작은 번호부터 방문)
+        for (List<Integer> children : adjList) {
+            children.sort(Comparator.naturalOrder());
         }
 
-        dfs(V - 1);
-        // dfs에서 사용한 visited 배열 false로 초기화, bfs에서 써야하므로
+        dfs(V);
         Arrays.fill(visited, false);
         System.out.println();
-        bfs(V - 1);
+        bfs(V);
     }
 
-    static void addEdge(int start, int end){
-        graph.get(start - 1).add(end);
-        graph.get(end - 1).add(start);
+    public static void addEdge(int start, int end) {
+        adjList.get(start).add(end);
+        adjList.get(end).add(start);
     }
 
-    static void dfs(int start){
-        visited[start] = true;
-        System.out.print(start + 1 + " ");
-        for (int i = 0; i < graph.get(start).size(); i++){
-            int target = graph.get(start).get(i) - 1;
-            if (!visited[target]){
-                dfs(target);
+    public static void dfs(int root) {
+        visited[root] = true;
+        System.out.print(root + 1);
+        for (int child : adjList.get(root)) {
+            if (!visited[child]) {
+                System.out.print(" ");
+                dfs(child);
             }
         }
     }
 
-    static void bfs(int start){
+    public static void bfs(int root) {
         Queue<Integer> Q = new LinkedList<>();
-        Q.offer(start);
-        visited[start] = true;
-        while(!Q.isEmpty()){
-            int node = Q.poll();
-            System.out.print(node + 1 + " ");
-            for (int i = 0; i < graph.get(node).size(); i++){
-                int target = graph.get(node).get(i) - 1;
-                if (!visited[target]){
-                    Q.offer(target);
-                    visited[target] = true;
+        Q.add(root);
+        visited[root] = true;
+
+        while (!Q.isEmpty()) {
+            int index = Q.poll();
+            System.out.print(index + 1);
+            for (int child : adjList.get(index)) {
+                if (!visited[child]) {
+                    Q.add(child);
+                    visited[child] = true;
                 }
             }
+            System.out.print(" ");
         }
     }
 }
