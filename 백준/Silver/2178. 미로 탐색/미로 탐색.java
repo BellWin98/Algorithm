@@ -6,66 +6,70 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
+
     static int[][] map;
     static boolean[][] visited;
     static int[] dx = {-1, 1, 0, 0};
     static int[] dy = {0, 0, -1, 1};
-    static int n;
-    static int m;
+    static int N; // Y좌표
+    static int M; // X좌표
 
     static class Node {
-        private final int x;
-        private final int y;
-        private final int distance;
+        int x;
+        int y;
+        int distance;
 
-        Node(int x, int y, int distance){
+        Node(int x, int y, int distance) {
             this.x = x;
             this.y = y;
             this.distance = distance;
         }
     }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        n = Integer.parseInt(st.nextToken()); // 세로
-        m = Integer.parseInt(st.nextToken()); // 가로
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-        map = new int[n][m];
-        visited = new boolean[n][m];
+        map = new int[N][M];
+        visited = new boolean[N][M];
 
-        for (int i = 0; i < n; i++){
-            char[] sp = br.readLine().toCharArray();
-            for (int j = 0; j < m; j++){
-                map[i][j] = Character.getNumericValue(sp[j]);
+        for (int i = 0; i < N; i++) {
+            char[] chars = br.readLine().toCharArray();
+            for (int j = 0; j < chars.length; j++) {
+                map[i][j] = Character.getNumericValue(chars[j]);
             }
         }
 
-        int answer = bfs(0, 0);
-        System.out.println(answer);
+        System.out.println(bfs(0, 0));
     }
 
-    public static int bfs(int x, int y){
+    public static int bfs(int x, int y) {
         Queue<Node> Q = new LinkedList<>();
         Q.add(new Node(x, y, 1));
-        visited[y][x] = true;
 
-        while (!Q.isEmpty()){
-            Node target = Q.poll();
-            if (target.x == m - 1 && target.y == n - 1){
-                return target.distance;
+        while (!Q.isEmpty()) {
+            Node current = Q.poll();
+            visited[current.y][current.x] = true;
+
+            if (current.x == M - 1 && current.y == N - 1) {
+                return current.distance;
             }
-            for (int i = 0; i < 4; i++){
-                int nx = target.x + dx[i];
-                int ny = target.y + dy[i];
 
-                if (nx >= 0 && nx < m && ny >= 0 && ny < n){
-                    if (map[ny][nx] == 1 && !visited[ny][nx]){
-                        Q.add(new Node(nx, ny, target.distance + 1));
-                        visited[ny][nx] = true;
+            for (int i = 0; i < 4; i++) {
+                int newX = current.x + dx[i];
+                int newY = current.y + dy[i];
+
+                if (newX >= 0 && newY >= 0 && newX < M && newY < N) {
+                    if (!visited[newY][newX] && map[newY][newX] == 1) {
+                        Q.add(new Node(newX, newY, current.distance + 1));
+                        visited[newY][newX] = true;
                     }
                 }
             }
         }
-        return 0;
+
+        return -1;
     }
 }
