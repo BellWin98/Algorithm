@@ -1,21 +1,14 @@
+import java.util.Arrays;
+
 class Solution {
     public long solution(int a, int b) {
-        int first = 0;
-        int second = 0;
-        long sum = 0;
-        if (a == b){
-            return a;
+        int[] arr = new int[]{a,b};
+        long answer = 0;
+        Arrays.sort(arr);
+        for (int i = arr[0]; i <= arr[1]; i++) {
+            answer += i;
         }
-        if (a < b){
-            first = a;
-            second = b;
-        } else {
-            first = b;
-            second = a;
-        }
-        for (int i = first; i <= second; i++){
-            sum += i;
-        }
-        return sum;
+
+        return answer;
     }
 }
