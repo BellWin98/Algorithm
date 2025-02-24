@@ -2,12 +2,15 @@ import java.util.*;
 
 class Solution {
     public long solution(long n) {
-        String numbers = String.valueOf(n);
+        List<Long> numList = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-        String[] numberSplit = numbers.split("");
-        Arrays.sort(numberSplit, Comparator.reverseOrder());
-        for (String number : numberSplit){
-            sb.append(number);
+        while (n != 0) {
+            numList.add(n % 10);
+            n /= 10;
+        }
+        numList.sort(Comparator.reverseOrder());
+        for (long num : numList) {
+            sb.append(num);
         }
         return Long.parseLong(sb.toString());
     }
