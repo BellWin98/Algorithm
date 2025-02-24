@@ -2,12 +2,16 @@ import java.util.*;
 
 class Solution {
     public String solution(String s) {
-        String[] strArr = s.split(" ");
-        int[] intArr = new int[strArr.length];
-        for (int i = 0; i < intArr.length; i++){
-            intArr[i] = Integer.parseInt(strArr[i]);
+        List<Integer> numList = new ArrayList<>();
+        StringTokenizer st = new StringTokenizer(s);
+        StringBuilder sb = new StringBuilder();
+        while (st.hasMoreTokens()) {
+            numList.add(Integer.parseInt(st.nextToken()));
         }
-        Arrays.sort(intArr);
-        return "" + intArr[0] + " " + intArr[intArr.length - 1];
+        Collections.sort(numList);
+        int max = numList.get(numList.size() - 1);
+        int min = numList.get(0);
+        sb.append(min).append(" ").append(max);
+        return sb.toString();
     }
 }
