@@ -13,7 +13,7 @@ public class Main {
     static int solution(int n, String s) {
         int sum = 0;
         for (char c : s.toCharArray()) {
-            sum += Character.getNumericValue(c);
+            sum += c - 48; // '1' - 48 = 1
         }
 
         return sum;
