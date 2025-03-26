@@ -15,18 +15,14 @@ public class Main {
         int end = 0;
         int sum = 1;
         while (arr[start]+arr[end] <= N) {
-            if (sum == N) {
+            if (sum > N) {
+                sum -= arr[start++];
+            } else if (sum < N) {
+                sum += arr[++end];
+            } else {
+                sum += arr[++end];
                 count++;
-                sum -= arr[start];
-                start++;
             }
-            if (sum + arr[end + 1]> N) {
-                sum -= arr[start];
-                start++;
-                continue;
-            }
-            end++;
-            sum += arr[end];
         }
         System.out.println(count);
     }
