@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -15,11 +16,17 @@ public class Main {
             int resource = Integer.parseInt(st.nextToken());
             resources[i] = resource;
         }
-        for (int i = 0; i < N - 1; i++) {
-            for (int j = i + 1; j < N; j++) {
-                if (resources[i] + resources[j] == M) {
-                    count++;
-                }
+        Arrays.sort(resources);
+        int start = 0;
+        int end = resources.length - 1;
+        while (start < end) {
+            if (resources[start] + resources[end] < M) {
+                start++;
+            } else if (resources[start] + resources[end] > M) {
+                end--;
+            } else {
+                count++;
+                start++;
             }
         }
         System.out.println(count);
