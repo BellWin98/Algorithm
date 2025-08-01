@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 81 MB, 시간: 0.13 ms
+메모리: 84.2 MB, 시간: 0.11 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 08월 01일 11:38:49
+2025년 08월 01일 11:42:51
 
 ### 문제 설명
 
@@ -79,7 +79,7 @@
 <td>5</td>
 </tr>
 <tr>
-<td>[["crow_mask", "face"], ["blue_sunglasses", "face"], ["smoky_makeup", "face"]]<font class="notranslate immersive-translate-target-wrapper" lang="ko"><br><font class="notranslate immersive-translate-target-translation-theme-none immersive-translate-target-translation-block-wrapper-theme-none immersive-translate-target-translation-block-wrapper" data-immersive-translate-translation-element-mark="1"><font class="notranslate immersive-translate-target-inner immersive-translate-target-translation-theme-none-inner" data-immersive-translate-translation-element-mark="1">[["까마귀 마스크", "얼굴"], ["파란색 선글라스", "얼굴"], ["스모키 메이크업", "얼굴"]]</font></font></font></td>
+<td>[["crow_mask", "face"], ["blue_sunglasses", "face"], ["smoky_makeup", "face"]]</td>
 <td>3</td>
 </tr>
 </tbody>
