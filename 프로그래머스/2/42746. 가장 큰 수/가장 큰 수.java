@@ -2,14 +2,19 @@ import java.util.*;
 
 class Solution {
     public String solution(int[] numbers) {
-        String[] strArr = new String[numbers.length];
-        for (int i = 0; i < strArr.length; i++){
-            strArr[i] = String.valueOf(numbers[i]);
-        }
-        Arrays.sort(strArr, (o1, o2) -> (o2 + o1).compareTo(o1 + o2));
-        if (strArr[0].equals("0")){
+        if (Arrays.stream(numbers).sum() == 0) {
             return "0";
         }
-        return String.join("", strArr);
+        List<String> strNumbers = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        for (int number : numbers) {
+            strNumbers.add(String.valueOf(number));
+        }
+        strNumbers.sort((a, b) -> (b + a).compareTo(a + b));
+        for (String strNumber : strNumbers) {
+            sb.append(strNumber);
+        }
+        
+        return sb.toString();
     }
 }
