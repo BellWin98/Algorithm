@@ -3,21 +3,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-
-    /**
-     * 1. 재귀로 팩토리얼 풀기
-     */
     public static void main(String[] args) throws IOException {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        System.out.println(factorial(N));
-    }
-
-    public static int factorial(int n){
-        if (n <= 1){
-            return 1;
+        if (N == 0) {
+            System.out.println(1);
+            return;
         }
-        return n * (factorial(n - 1));
+        int answer = 1;
+        for (int i = 2; i <= N; i++) {
+            answer *= i;
+        }
+        System.out.println(answer);
     }
 }
