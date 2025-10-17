@@ -1,21 +1,17 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int N = Integer.parseInt(br.readLine());
-        String s = br.readLine();
-        System.out.println(solution(N, s));
-    }
-
-    static int solution(int n, String s) {
+        String numbers = br.readLine();
         int sum = 0;
-        for (char c : s.toCharArray()) {
-            sum += c - 48; // '1' - 48 = 1
+        for (char number : numbers.toCharArray()) {
+            sum += Character.getNumericValue(number);
         }
-
-        return sum;
+        bw.write(String.valueOf(sum));
+        bw.flush();
+        bw.close();
     }
 }
