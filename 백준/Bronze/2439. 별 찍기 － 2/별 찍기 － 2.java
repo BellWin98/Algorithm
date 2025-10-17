@@ -1,24 +1,17 @@
-import java.util.*;
+import java.io.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        int n = sc.nextInt();
-        for (int i = 0; i < n; i++){
-            int j = n - i - 1;
-            int count = j;
-            int star = n - j;
-            while (count > 0){
-                sb.append(" ");
-                count--;
-            }
-            while (star > 0){
-                sb.append("*");
-                star--;
-            }
-            System.out.println(sb);
+        int N = Integer.parseInt(br.readLine());
+        for (int i = 1; i <= N; i++) {
+            sb.append(" ".repeat(N - i)).append("*".repeat(i));
+            bw.write(sb + "\n");
             sb.setLength(0);
         }
+        bw.flush();
+        bw.close();
     }
 }
