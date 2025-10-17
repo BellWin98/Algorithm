@@ -1,10 +1,12 @@
-import java.util.*;
+import java.io.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String str = sc.next();
-        int ascii = str.charAt(0);
-        System.out.println(ascii);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int c = br.readLine().charAt(0);
+        bw.write(String.valueOf(c));
+        bw.flush();
+        bw.close();
     }
 }
