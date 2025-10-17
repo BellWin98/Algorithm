@@ -1,19 +1,18 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        List<Integer> list = new ArrayList<>();
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
         int sum = 0;
-        for (int i = 0 ; i < 5; i++){
-            list.add(sc.nextInt());
+        while (st.hasMoreTokens()) {
+            int num = Integer.parseInt(st.nextToken());
+            sum += num * num;
         }
-        for (int number : list){
-            sum += (int) Math.pow(number, 2);
-        }
-        System.out.println(sum % 10);
+        bw.write(String.valueOf(sum % 10));
+        bw.flush();
+        bw.close();
     }
 }
-
