@@ -1,17 +1,19 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class Main {
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int T = Integer.parseInt(br.readLine());
-
-        for (int i = 0; i < T; i++){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < T; i++) {
             String str = br.readLine();
-            System.out.print(str.charAt(0));
-            System.out.println(str.charAt(str.length() - 1));
+            char first = str.charAt(0);
+            char last = str.charAt(str.length() - 1);
+            bw.write(sb.append(first).append(last) + "\n");
+            sb.setLength(0);
         }
+        bw.flush();
+        bw.close();
     }
 }
