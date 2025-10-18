@@ -1,21 +1,27 @@
-import java.util.*;
+import java.io.*;
+import java.util.StringTokenizer;
 
 public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int H = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int hour = sc.nextInt();
-        int minute = sc.nextInt() - 45;
-
-        if (minute < 0){
-            minute += 60;
-            hour -= 1;
+        if (M - 45 < 0) {
+            M += 15;
+            if (H == 0) {
+                H = 23;
+            } else {
+                H -= 1;
+            }
+        } else {
+            M -= 45;
         }
 
-        if (hour < 0){
-            hour += 24;
-        }
-
-        System.out.println(hour + " " + minute);
+        bw.write(H + " " + M);
+        bw.flush();
+        bw.close();
     }
 }
