@@ -1,33 +1,23 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
-
-    /**
-     * 1. 입력 문자열을 List에 넣는다.
-     * 2. ASCII 코드에서 소문자 a ~ z까지 뽑아서, List에 포함되는 지 확인. 이후 indexOf로 인덱스 추출.
-     * 3. list에 알파벳 없을 경우 -1 반환
-     * 4. 공백으로 구분해서 출력
-     */
     public static void main(String[] args) throws IOException {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
-        String inputStr = br.readLine();
-        List<Character> characterList = new ArrayList<>();
-        for (char c : inputStr.toCharArray()){
-            characterList.add(c);
+        Map<Character, Integer> hm = new HashMap<>();
+        String S = br.readLine();
+        int idx = 0;
+        for (char c : S.toCharArray()) {
+            hm.put(c, hm.getOrDefault(c, idx++));
         }
-        for (int i = 97; i <= 122; i++){
-            if (characterList.contains((char) i)) {
-                sb.append(characterList.indexOf((char) i)).append(" ");
-            } else {
-                sb.append(-1).append(" ");
-            }
+        for (int i = 97; i <= 122; i++) {
+            sb.append(hm.getOrDefault((char) i, -1)).append(" ");
         }
-        System.out.println(sb.toString().trim());
+        bw.write(sb.toString().trim());
+        bw.flush();
+        bw.close();
     }
 }
