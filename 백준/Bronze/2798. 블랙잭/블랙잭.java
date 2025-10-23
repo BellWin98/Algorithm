@@ -1,43 +1,35 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int M = sc.nextInt();
-
-        List<Integer> cards = new ArrayList<>();
-
-        for (int i = 0; i < N; i++) {
-            cards.add(sc.nextInt());
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+        int[] arr = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
         }
-        int max = 0;
-        for (int i = 0; i < cards.size() - 2; i++){
-            if (cards.get(i) > M){
-                continue;
-            }
-            for (int j = i + 1; j < cards.size() - 1; j++){
-                if (cards.get(j) > M){
-                    continue;
-                }
-                for (int k = j + 1; k < cards.size(); k++){
-                    if (cards.get(k) > M){
-                        continue;
-                    }
-                    int sum = cards.get(i) + cards.get(j) + cards.get(k);
-                    if (sum == M){
-                        max = sum;
-                        System.out.println(max);
-                        return;
-                    }
-                    if (sum < M && sum > max){
-                        max = sum;
+        Arrays.sort(arr);
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < arr.length - 2; i++) {
+            for (int j = i + 1; j < arr.length - 1; j++) {
+                for (int k = j + 1; k < arr.length; k++) {
+                    int sum = arr[i] + arr[j] + arr[k];
+                    if (sum <= M) {
+                        max = Math.max(sum, max);
+                    } else {
+                        break;
                     }
                 }
             }
         }
-        System.out.println(max);
+        bw.write(max + "\n");
+        bw.flush();
+        bw.close();
     }
 }
