@@ -1,19 +1,29 @@
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        Set<String> set = new HashSet<>();
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < N; i++){
-            set.add(sc.next());
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int N = Integer.parseInt(br.readLine());
+        String[] arr = new String[N];
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = br.readLine();
         }
-        Iterator<String> iter = set.iterator();
-        while (iter.hasNext()){
-            list.add(iter.next());
+        br.close();
+        Arrays.sort(arr, (o1, o2) -> {
+            if (o1.length() == o2.length()) {
+                return o1.compareTo(o2);
+            }
+            return o1.length() - o2.length();
+        });
+        bw.write(arr[0] + "\n");
+        for (int i = 1; i < arr.length; i++) {
+            if (!arr[i].equals(arr[i - 1])) {
+                bw.write(arr[i] + "\n");
+            }
         }
-        list.sort(Comparator.comparingInt(String::length).thenComparing(String::compareTo));
-        list.stream().forEach(System.out::println);
+        bw.flush();
+        bw.close();
     }
 }
