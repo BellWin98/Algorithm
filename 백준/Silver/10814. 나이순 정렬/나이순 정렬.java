@@ -1,52 +1,58 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
 
-    public static class UserInfo {
-        private final int id;
-        private final String name;
+    public static int idx = 1;
+
+    public static class Member {
+        private final int order;
         private final int age;
+        private final String name;
 
-        UserInfo(int id, String name, int age){
-            this.id = id;
-            this.name = name;
+        public Member(int age, String name) {
+            this.order = idx++;
             this.age = age;
+            this.name = name;
         }
 
-        public int getId(){
-            return id;
+        public int getOrder() {
+            return this.order;
         }
 
-        public String getName(){
-            return name;
+        public int getAge() {
+            return this.age;
         }
 
-        public int getAge(){
-            return age;
+        public String getName() {
+            return this.name;
         }
     }
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        List<UserInfo> userInfos = new ArrayList<>();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
+        List<Member> members = new ArrayList<>();
         int N = Integer.parseInt(br.readLine());
-        int id = 1;
-        for (int i = 0; i < N; i++){
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            int age = Integer.parseInt(st.nextToken());
-            String name = st.nextToken();
-            UserInfo userInfo = new UserInfo(id++, name, age);
-            userInfos.add(userInfo);
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            Member member = new Member(Integer.parseInt(st.nextToken()), st.nextToken());
+            members.add(member);
         }
-
-        // 다중 조건 정렬 (나이 오름차순 -> 가입 순서 오름차순) 
-        userInfos.sort(Comparator.comparing(UserInfo::getAge).thenComparing(UserInfo::getId));
-
-        for (UserInfo userInfo : userInfos){
-            System.out.println(userInfo.getAge() + " " + userInfo.getName());
+        br.close();
+        members.sort((a, b) -> {
+            if (a.getAge() == b.getAge()) {
+                return a.getOrder() - b.getOrder();
+            }
+            return a.getAge() - b.getAge();
+        });
+        for (Member member : members) {
+            bw.write(member.getAge() + " " + member.getName() + "\n");
         }
+        bw.flush();
+        bw.close();
     }
 }
