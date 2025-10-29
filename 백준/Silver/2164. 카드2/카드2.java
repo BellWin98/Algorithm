@@ -1,21 +1,26 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int N = Integer.parseInt(br.readLine());
-        Deque<Integer> deque = new ArrayDeque<>();
+        br.close();
+        Deque<Integer> dq = new ArrayDeque<>();
         for (int i = 1; i <= N; i++) {
-            deque.add(i);
+            dq.add(i);
         }
-        while (deque.size() > 1) {
-            deque.pollFirst();
-            deque.addLast(deque.pollFirst());
+        int answer = 0;
+        while (!dq.isEmpty()) {
+            answer = dq.poll();
+            if (dq.peek() != null) {
+                dq.addLast(dq.poll());
+            }
         }
-        System.out.println(deque.poll());
+        bw.write(String.valueOf(answer));
+        bw.flush();
+        bw.close();
     }
 }
