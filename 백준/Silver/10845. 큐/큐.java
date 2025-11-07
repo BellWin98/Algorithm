@@ -1,61 +1,30 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int N = Integer.parseInt(br.readLine());
-        Deque<Integer> DQ = new ArrayDeque<>();
-
-        for (int i = 0; i < N; i++){
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            String command;
-            int X = 0;
-            if (st.countTokens() > 1) {
-                command = st.nextToken();
-                X = Integer.parseInt(st.nextToken());
+        Deque<Integer> dq = new ArrayDeque<>();
+        for (int i = 0; i < N; i++) {
+            String str = br.readLine();
+            if (str.contains(" ")) {
+                String[] strArr = str.split(" ");
+                dq.offer(Integer.parseInt(strArr[1]));
+            } else if (str.equals("pop")) {
+                bw.write(dq.isEmpty() ? "-1\n" : dq.poll() + "\n");
+            } else if (str.equals("size")) {
+                bw.write(dq.size() + "\n");
+            } else if (str.equals("empty")) {
+                bw.write(dq.isEmpty() ? "1\n" : "0\n");
+            } else if (str.equals("front")) {
+                bw.write(dq.isEmpty() ? "-1\n" : dq.peekFirst() + "\n");
             } else {
-                command = st.nextToken();
-            }
-
-            switch (command){
-                case "push":
-                    DQ.add(X);
-                    break;
-                case "pop":
-                    if (!DQ.isEmpty()){
-                        System.out.println(DQ.pollFirst());
-                    } else {
-                        System.out.println(-1);
-                    }
-                    break;
-                case "size":
-                    System.out.println(DQ.size());
-                    break;
-                case "empty":
-                    if (!DQ.isEmpty()){
-                        System.out.println(0);
-                    } else {
-                        System.out.println(1);
-                    }
-                    break;
-                case "front":
-                    if (!DQ.isEmpty()){
-                        System.out.println(DQ.peek());
-                    } else {
-                        System.out.println(-1);
-                    }
-                    break;
-                case "back":
-                    if (!DQ.isEmpty()){
-                        System.out.println(DQ.peekLast());
-                    } else {
-                        System.out.println(-1);
-                    }
+                bw.write(dq.isEmpty() ? "-1\n" : dq.peekLast() + "\n");
             }
         }
+        bw.flush();
+        bw.close();
     }
 }
