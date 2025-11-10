@@ -1,79 +1,53 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
 
-    static class Node {
-        private int index;
-        private int rank;
+    public static class Document {
+        int idx;
+        int priority;
 
-        public Node(int index, int rank){
-            this.index = index;
-            this.rank = rank;
+        public Document(int idx, int priority) {
+            this.idx = idx;
+            this.priority = priority;
         }
     }
-    
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-
-        int T = Integer.parseInt(st.nextToken());
-
-        for (int i = 0; i < T; i++){
-            
-            // index와 rank(중요도)를 가진 node를 담을 큐 생성
-            Queue<Node> Q = new LinkedList<>();
-            int index = 0;
-            int N = 0; // 문서의 개수
-            int M = 0; // 타겟 문서가 현재 Queue에서 놓인 위치
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int T = Integer.parseInt(br.readLine());
+        StringTokenizer st;
+        Queue<Document> Q = new LinkedList<>();
+        for (int i = 0; i < T; i++) {
             st = new StringTokenizer(br.readLine());
-            while (st.hasMoreTokens()){
-                N = Integer.parseInt(st.nextToken());
-                M = Integer.parseInt(st.nextToken());
-            }
+            int N = Integer.parseInt(st.nextToken()); // 문서 갯수
+            int M = Integer.parseInt(st.nextToken()); // 몇번째로 인쇄되었는지
             st = new StringTokenizer(br.readLine());
-
-            // 주어진 중요도(rank)를 담을 리스트를 생성
-            // 이후 max값 지정할 때 사용함
-            List<Integer> rankList = new ArrayList<>();
-
-            while (st.hasMoreTokens()){
-                int rank = Integer.parseInt(st.nextToken());
-                rankList.add(rank);
-                
-                // 노드 객체는 index와 rank(중요도)를 가지고 있고 큐에 순서대로 삽입
-                Node node = new Node(index++, rank);
-                Q.offer(node);
+            int idx = 0;
+            while (st.hasMoreTokens()) {
+                Q.offer(new Document(idx++, Integer.parseInt(st.nextToken())));
             }
-            
-            // 중요도 리스트를 내림차순으로 정렬
-            rankList.sort(Collections.reverseOrder());
-
-            index = 0;
-            int answer = 0;
-            int max = rankList.get(index);
-            while (!Q.isEmpty()){
-                // Node의 index가 M(타겟 문서)이고, rank가 max와 동일하다면 타겟 문서가 몇 번째로 인쇄되는 지 알 수 있음
-                if (Q.peek().index == M && Q.peek().rank == max){
-                    answer++;
-                    System.out.println(answer);
-                    break;
+            int order = 0;
+            while (!Q.isEmpty()) {
+                Document polled = Q.poll();
+                boolean bExtract = true;
+                for (Document document : Q) {
+                    if (polled.priority < document.priority) {
+                        Q.offer(polled);
+                        bExtract = false;
+                        break;
+                    }
                 }
-
-                // Node의 rank(중요도)가 max와 같지 않으면 poll해서 큐의 맨 뒤 순서로 add한다.
-                if (Q.peek().rank != max){
-                    Q.offer(Q.poll());
-                    continue;
+                if (bExtract) {
+                    order++;
+                    if (polled.idx == M) {
+                        bw.write(order + "\n");
+                    }
                 }
-                
-                // Node의 rank(중요도가) max와 같고, index가 M이 아니면 큐에서 제외시키고,
-                // 중요도 리스트에서 그 다음으로 큰 rank를 max로 지정
-                Q.poll();
-                max = rankList.get(++index);
-                answer++;
             }
         }
+        bw.flush();
+        bw.close();
     }
 }
