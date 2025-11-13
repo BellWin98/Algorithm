@@ -12,16 +12,14 @@ public class Main {
         for (int i = 0; i < N; i++) {
             al.add(Integer.parseInt(br.readLine()));
         }
-        int idx = al.size() - 1;
+        br.close();
         int count = 0;
-        while (K > 0) {
-            int coin = al.get(idx);
-            if (coin > K) {
-                idx--;
-                continue;
+        for (int i = al.size() - 1; i >= 0; i--) {
+            int coin = al.get(i);
+            if (coin <= K) {
+                count += K / coin;
+                K = K % coin;
             }
-            K -= coin;
-            count++;
         }
         bw.write(count + "\n");
         bw.flush();
