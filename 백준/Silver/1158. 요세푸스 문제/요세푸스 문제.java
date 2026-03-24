@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -9,33 +7,33 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        StringBuilder sb = new StringBuilder();
-        sb.append("<");
-        Queue<Integer> Q = new LinkedList<>();
-
+        br.close();
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
-        int index = 1;
-
-        for (int i = 1; i <= N; i++){
-            Q.add(i);
+        Queue<Integer> Q = new LinkedList<>();
+        for (int i = 1; i <= N; i++) {
+            Q.offer(i);
         }
-
-        while (!Q.isEmpty()){
-            if (index == K){
-                if (Q.size() == 1){
-                    sb.append(Q.poll()).append(">");
-                    break;
+        StringBuilder sb = new StringBuilder();
+        sb.append("<");
+        int count = 1;
+        while (!Q.isEmpty()) {
+            if (count == K) {
+                sb.append(Q.poll());
+                if (!Q.isEmpty()) {
+                    sb.append(", ");
+                    count = 1;
                 }
-                sb.append(Q.poll()).append(", ");
-                index = 1;
-                continue;
+            } else {
+                Q.offer(Q.poll());
+                count++;
             }
-            Q.offer(Q.poll());
-            index++;
         }
-        
-        System.out.println(sb.toString().trim());
+        sb.append(">");
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
     }
 }
