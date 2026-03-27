@@ -1,16 +1,32 @@
+import java.util.*;
+
 class Solution {
-    public int solution(int[] numbers, int target) {
-        return dfs(numbers, target, 0, 0);
-    }
     
-    public static int dfs(int[] numbers, int target, int idx, int sum) {
-        if (idx == numbers.length) {
-            return target == sum ? 1 : 0;
+    static List<Integer> result = new ArrayList<>();
+    
+    public int solution(int[] numbers, int target) {
+        
+        recursive(numbers, 0, 0);
+        
+        int answer = 0;
+        for (int sum : result) {
+            if (target == sum) {
+                answer++;
+            }
         }
         
-        int add = dfs(numbers, target, idx + 1, sum + numbers[idx]);
-        int sub = dfs(numbers, target, idx + 1, sum - numbers[idx]);
+        return answer;
         
-        return add + sub;
+    }
+    
+    public void recursive(int[] numbers, int currentIdx, int currentSum) {
+        
+        if (currentIdx == numbers.length) {
+            result.add(currentSum);
+            return;
+        }
+        
+        recursive(numbers, currentIdx + 1, currentSum + numbers[currentIdx]);
+        recursive(numbers, currentIdx + 1, currentSum - numbers[currentIdx]);
     }
 }
