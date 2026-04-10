@@ -1,60 +1,42 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.*;
 import java.util.StringTokenizer;
 
 public class Main {
 
-    static List<List<Integer>> adjList = new ArrayList<>();
+    static int[][] graph;
     static boolean[] visited;
     static int count = 0;
 
     public static void main(String[] args) throws IOException {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine()); // 컴퓨터 수
-        int edges = Integer.parseInt(br.readLine()); // 간선 수
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int N = Integer.parseInt(br.readLine());
+        int M = Integer.parseInt(br.readLine());
 
-        visited = new boolean[N];
+        graph = new int[N + 1][N + 1];
+        visited = new boolean[N + 1];
 
-        for (int i = 0; i < N; i++) {
-            adjList.add(new ArrayList<>());
-        }
-
-        for (int i = 0; i < edges; i++) {
+        for (int i = 0; i < M; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            int start = Integer.parseInt(st.nextToken()) - 1;
-            int end = Integer.parseInt(st.nextToken()) - 1;
-            addEdges(start, end);
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            graph[u][v] = 1;
+            graph[v][u] = 1;
         }
-
-        for (List<Integer> children : adjList) {
-            Collections.sort(children);
-        }
-
-        dfs(0);
-        System.out.println(count);
-
+        br.close();
+        dfs(1);
+        bw.write(count + "\n");
+        bw.flush();
+        bw.close();
     }
 
-    public static void addEdges(int start, int end) {
-        adjList.get(start).add(end);
-        adjList.get(end).add(start);
-    }
-
-    public static void dfs(int start) {
-
-        visited[start] = true;
-
-        for (int child : adjList.get(start)) {
-            if (!visited[child]) {
+    public static void dfs(int node) {
+        visited[node] = true;
+        for (int i = 1; i < graph.length; i++) {
+            if (graph[node][i] == 1 && !visited[i]) {
                 count++;
-                dfs(child);
+                dfs(i);
             }
         }
     }
 }
-
