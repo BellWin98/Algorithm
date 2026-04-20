@@ -1,32 +1,20 @@
-import java.util.*;
-
 class Solution {
-    
-    static List<Integer> result = new ArrayList<>();
-    
     public int solution(int[] numbers, int target) {
-        
-        recursive(numbers, 0, 0);
-        
-        int answer = 0;
-        for (int sum : result) {
-            if (target == sum) {
-                answer++;
-            }
-        }
-        
-        return answer;
-        
+        return dfs(numbers, target, 0, 0);
     }
     
-    public void recursive(int[] numbers, int currentIdx, int currentSum) {
+    public static int dfs(int[] numbers, int target, int idx, int sum) {
         
-        if (currentIdx == numbers.length) {
-            result.add(currentSum);
-            return;
+        if (idx == numbers.length) {
+            if (sum == target) {
+                return 1;
+            }
+            return 0;
         }
         
-        recursive(numbers, currentIdx + 1, currentSum + numbers[currentIdx]);
-        recursive(numbers, currentIdx + 1, currentSum - numbers[currentIdx]);
+        int plus = dfs(numbers, target, idx + 1, sum + numbers[idx]);
+        int minus = dfs(numbers, target, idx + 1, sum - numbers[idx]);
+        
+        return plus + minus;
     }
 }
