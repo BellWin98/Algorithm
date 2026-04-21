@@ -1,23 +1,30 @@
 class Solution {
-    static int answer = 0;
+    
+    static boolean visited[];
+    static int count = 0;
+    
     public int solution(int n, int[][] computers) {
-        boolean[] visited = new boolean[n];
-        // dfs(0)으로 시작하면 안됨. 전체 노드를 순회해야 함
-        for (int i = 0; i < n; i++){
-            dfs(computers, visited, i);
-        }
+        visited = new boolean[n];
         
-        // 전체노드 - 간선의 개수
-        return n - answer;
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                count++;
+                dfs(i, computers);
+            }
+        }   
+        
+        return count;
     }
     
-    public void dfs(int[][] computers, boolean[] visited, int start){
-        visited[start] = true;
-        for (int i = 0; i < computers[start].length; i++){
-            if (!visited[i] && computers[start][i] == 1){
-                // 노드끼리 이어져있으면 간선의 개수 count
-                answer++;
-                dfs(computers, visited, i);
+    public static void dfs(int i, int[][] computers) {
+        visited[i] = true;
+        
+        for (int j = 0; j < computers.length; j++) {
+            if (i == j) {
+                continue;
+            }
+            if (computers[i][j] == 1 && !visited[j]) {
+                dfs(j, computers);
             }
         }
     }
