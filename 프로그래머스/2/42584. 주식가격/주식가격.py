@@ -2,9 +2,7 @@ from collections import deque
 
 def solution(prices):
     answer = [0] * len(prices)
-    q = deque()
-    for price in prices:
-        q.append(price)
+    q = deque(prices)
     
     idx = 0
     while q:
