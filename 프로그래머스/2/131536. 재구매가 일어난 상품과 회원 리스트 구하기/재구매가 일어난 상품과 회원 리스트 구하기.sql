@@ -1,6 +1,7 @@
-# 2개 컬럼 GROUP BY 시, SELECT 절에 모두 명시해야 함
-SELECT USER_ID, PRODUCT_ID
-FROM ONLINE_SALE
-GROUP BY USER_ID, PRODUCT_ID
-HAVING COUNT(*) > 1
-ORDER BY USER_ID, PRODUCT_ID DESC;
+select 
+    user_id,
+    product_id
+from online_sale
+group by user_id, product_id
+having count(*) > 1
+order by user_id, product_id desc
